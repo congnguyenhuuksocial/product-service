@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package api.product.v1;
+option go_package = "/internal/adapter/grpc/product/v1;productv1";
+
+service ProductService {
+    rpc CreateProduct(CreateProductRequest) returns (ProductResponse) {}
+    rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse) {}
+}
+
+message CreateProductRequest {
+    string name = 1;
+    string description = 2;
+    float price = 3;
+}
+
+message UpdateProductRequest {
+  uint32 id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+}
+
+message DeleteProductRequest {
+    string id = 1;
+}
+
+message ProductResponse {
+    uint32 id = 1;
+    string name = 2;
+    string description = 3;
+    float price = 4;
+}
+
+

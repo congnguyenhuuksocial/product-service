@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package kafka;
+option go_package = "/internal/infrastructure/messagebus/messages;messages";
+
+message KafkaMessage {
+  string key = 1;
+  string value = 2;
+}

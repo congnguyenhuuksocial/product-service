@@ -1,0 +1,11 @@
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualService
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "product-app.fullname" . }}
+spec:
+  awsName: {{ include "product-app.fullname" . }}.local
+  provider:
+    virtualRouter:
+      virtualRouterRef:
+        name: {{ include "product-app.fullname" . }}-router

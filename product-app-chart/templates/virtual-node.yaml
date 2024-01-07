@@ -1,0 +1,24 @@
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: {{ include "product-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ include "product-app.name" . }}
+  listeners:
+    - portMapping:
+        port: {{ .Values.service.internalPort }}
+        protocol: http
+  serviceDiscovery:
+    dns:
+      hostname: {{ include "product-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  backends:
+    - virtualService:
+        virtualServiceRef:
+          name: {{ include "product-app.fullname" . }}-vs
+  logging:
+    accessLog:
+      file:
+        path: "/dev/stdout"

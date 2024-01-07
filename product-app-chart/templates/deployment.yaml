@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "product-app.fullname" . }}
+  labels:
+    {{- include "product-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "product-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "product-app.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+        # App Mesh Envoy sidecar container
+        - name: envoy
+          # Specify the Envoy image
+          image: "840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy:v1.15.1.0-prod"
+          securityContext:
+            runAsUser: 1337
+          env:
+            - name: APPMESH_VIRTUAL_NODE_NAME
+              value: "mesh/{{ .Values.appMesh.meshName }}/virtualNode/{{ .Values.appMesh.virtualNodeName }}"
+            - name: AWS_REGION
+              value: "{{ .Values.appMesh.region }}"
+            - name: ENVOY_LOG_LEVEL
+              value: "{{ .Values.appMesh.envoyLogLevel }}"
+          resources:
+          {{- toYaml .Values.appMesh.envoyResources | nindent 10 }}

@@ -1,0 +1,27 @@
+apiVersion: v2
+name: product-app
+description: A Helm chart for Kubernetes deployment of my-app
+type: application
+
+# Version of the chart
+version: 1.0.0
+
+# This should correspond to the version of the application you are deploying.
+appVersion: 1.0.0
+
+dependencies:
+  - name: mysql
+    version: "8.1.2"
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: redis
+    version: "12.7.8"
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: elasticsearch
+    version: "7.9.3"
+    repository: "https://helm.elastic.co"
+  - name: kafka
+    version: "12.3.0"
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: zookeeper
+    version: "12.9.1"
+    repository: "https://charts.bitnami.com/bitnami"

@@ -1,0 +1,50 @@
+# Application specific values
+replicaCount: 1
+image:
+  repository: product-app/image
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+service:
+  type: ClusterIP
+  port: 80
+
+# MySQL configuration
+mysql:
+  enabled: true
+  mysqlRootPassword: rootpassword
+  mysqlUser: user
+  mysqlPassword: password
+  mysqlDatabase: myappdb
+
+# Redis configuration
+redis:
+  enabled: true
+  usePassword: true
+  password: redispassword
+
+# Elasticsearch configuration
+elasticsearch:
+  enabled: true
+  replicas: 1
+  minimumMasterNodes: 1
+
+# Kafka configuration
+kafka:
+  enabled: true
+  replicaCount: 1
+  zookeeper:
+    replicaCount: 1
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Other custom values for your application
+customValue1: value1
+customValue2: value2
