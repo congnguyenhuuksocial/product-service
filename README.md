@@ -244,6 +244,7 @@ helm install product ./product-app-chart
 - Kafka Consumers process these messages and might interact back with Services or Data Stores.
 
 **UML Data Flow Diagram**
+Open by [PlantUML](https://plantuml.com/zh/)
 ```
 @startuml
 !define RECTANGLE class
