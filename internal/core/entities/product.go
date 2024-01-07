@@ -1,48 +1,46 @@
 package entities
 
 import (
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
 	"time"
 )
 
 type Product struct {
-	gorm.Model              // This adds ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Name        string      `gorm:"type:varchar(100);not null"`
-	Description string      `gorm:"type:text;not null"`
-	Price       float64     `gorm:"type:decimal(10,2);not null"`
-	SKU         string      `gorm:"type:varchar(30);not null;unique"`
-	Stock       int         `gorm:"type:int;not null;default:0"`
-	Categories  []Category  `gorm:"many2many:product_categories;"` // Association to a Category struct
-	Images      []Image     `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Attributes  []Attribute `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Ratings     []Rating    `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ID          uint           `gorm:"primaryKey;autoIncrement"`
+	Name        string         `gorm:"type:varchar(100)"`
+	Description string         `gorm:"type:text"`
+	Price       float64        `gorm:"type:decimal(10,2)"`
+	SKU         string         `gorm:"type:varchar(30);unique"`
+	Stock       int            `gorm:"type:int;not null;default:0"`
+	Categories  datatypes.JSON `gorm:"type:json;default:[]"`
+	Images      datatypes.JSON `gorm:"type:json;default:[]"`
+	Attributes  datatypes.JSON `gorm:"type:json;default:[]"`
+	Ratings     datatypes.JSON `gorm:"type:json;default:[]"`
+	CreatedAt   time.Time      `gorm:"type:timestamp;not null;default:now()"`
+	UpdatedAt   time.Time      `gorm:"type:timestamp;not null;default:now()"`
+	DeletedAt   gorm.DeletedAt `gorm:"type:timestamp"`
 }
 
 type Category struct {
-	ID   string `gorm:"primaryKey"`
-	Name string `gorm:"type:varchar(100);not null;unique"`
+	Name string `json:"Name"`
 }
 
 type Image struct {
-	gorm.Model
-	URL       string `gorm:"type:varchar(255);not null"`
-	Alt       string `gorm:"type:varchar(255)"`
-	IsMain    bool   `gorm:"type:boolean;not null;default:false"`
-	ProductID uint   `gorm:"type:bigint;not null"`
+	URL    string `json:"URL"`
+	Alt    string `json:"Alt"`
+	IsMain bool   `json:"IsMain"`
 }
 
 type Attribute struct {
-	gorm.Model
-	Key       string `gorm:"type:varchar(50);not null"`
-	Value     string `gorm:"type:varchar(100);not null"`
-	ProductID uint   `gorm:"type:bigint;not null"`
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
 }
 
 type Rating struct {
-	gorm.Model
-	UserID    string    `gorm:"type:uuid;not null"`
-	ProductID uint      `gorm:"type:bigint;not null"`
-	Rating    float32   `gorm:"type:decimal(3,2);not null"`
-	Comment   string    `gorm:"type:text"`
-	Timestamp time.Time `gorm:"type:timestamp"`
+	UserID    string    `json:"UserID"`
+	ProductID uint      `json:"ProductID"`
+	Rating    float32   `json:"Rating"`
+	Comment   string    `json:"Comment"`
+	Timestamp time.Time `json:"Timestamp"`
 }
