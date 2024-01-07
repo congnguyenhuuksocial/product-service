@@ -54,15 +54,15 @@ services:
       - "9200:9200"
       - "9300:9300"
 
-  product-service:
-    build: ./path/to/product-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - kafka
-      - redis
-      - mysql
-      - elasticsearch
+#  product-service:
+#    build: ./path/to/product-service
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - kafka
+#      - redis
+#      - mysql
+#      - elasticsearch
 
 volumes:
   mysql-data:

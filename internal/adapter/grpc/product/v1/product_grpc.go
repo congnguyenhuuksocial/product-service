@@ -6,18 +6,18 @@ import (
 	"product-service/internal/core/ports"
 )
 
-type productGrpcService struct {
+type ProductGrpcService struct {
 	productService ports.ProductService
 	UnimplementedProductServiceServer
 }
 
-func NewProductGrpcService(productService ports.ProductService) ProductServiceServer {
-	return &productGrpcService{
+func NewProductService(productService ports.ProductService) *ProductGrpcService {
+	return &ProductGrpcService{
 		productService: productService,
 	}
 }
 
-func (s *productGrpcService) CreateProduct(ctx context.Context, req *CreateProductRequest) (*ProductResponse, error) {
+func (s *ProductGrpcService) CreateProduct(ctx context.Context, req *CreateProductRequest) (*ProductResponse, error) {
 	product := &entities.Product{
 		Name:        req.Name,
 		Price:       float64(req.Price),
@@ -31,7 +31,7 @@ func (s *productGrpcService) CreateProduct(ctx context.Context, req *CreateProdu
 	return nil, nil
 }
 
-func (s *productGrpcService) UpdateProduct(ctx context.Context, req *UpdateProductRequest) (*ProductResponse, error) {
+func (s *ProductGrpcService) UpdateProduct(ctx context.Context, req *UpdateProductRequest) (*ProductResponse, error) {
 	product := &entities.Product{
 		Name:        req.Name,
 		Price:       float64(req.Price),

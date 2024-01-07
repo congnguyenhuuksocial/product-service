@@ -11,12 +11,12 @@ type Product struct {
 	Name        string         `gorm:"type:varchar(100)"`
 	Description string         `gorm:"type:text"`
 	Price       float64        `gorm:"type:decimal(10,2)"`
-	SKU         string         `gorm:"type:varchar(30);unique"`
+	SKU         string         `gorm:"type:varchar(30)"`
 	Stock       int            `gorm:"type:int;not null;default:0"`
-	Categories  datatypes.JSON `gorm:"type:json;default:[]"`
-	Images      datatypes.JSON `gorm:"type:json;default:[]"`
-	Attributes  datatypes.JSON `gorm:"type:json;default:[]"`
-	Ratings     datatypes.JSON `gorm:"type:json;default:[]"`
+	Categories  datatypes.JSON `gorm:"type:json"`
+	Images      datatypes.JSON `gorm:"type:json"`
+	Attributes  datatypes.JSON `gorm:"type:json"`
+	Ratings     datatypes.JSON `gorm:"type:json"`
 	CreatedAt   time.Time      `gorm:"type:timestamp;not null;default:now()"`
 	UpdatedAt   time.Time      `gorm:"type:timestamp;not null;default:now()"`
 	DeletedAt   gorm.DeletedAt `gorm:"type:timestamp"`

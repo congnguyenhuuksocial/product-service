@@ -12,7 +12,7 @@ import (
 
 var Module = fx.Options(
 	fx.Provide(
-		productv1.NewProductGrpcService,
+		productv1.NewProductService,
 		healthv1.NewHealthCheckService,
 	),
 	fx.Provide(database.NewDatabase),

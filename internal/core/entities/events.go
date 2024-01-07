@@ -1,6 +1,9 @@
 package entities
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 // Event is the interface that all events should implement
 type Event interface {
@@ -23,4 +26,12 @@ func (p ProductCreatedEvent) EventName() string {
 
 func (p ProductCreatedEvent) Timestamp() time.Time {
 	return p.Created
+}
+
+func (p ProductCreatedEvent) Marshal() string {
+	out, err := json.Marshal(p)
+	if err != nil {
+		return ""
+	}
+	return string(out)
 }

@@ -94,9 +94,9 @@ func NewConfig() *Config {
 		Database: &DatabaseConfig{
 			Host:                  pkg.GetEnv(constants.EnvDbHost, "localhost"),
 			Port:                  pkg.GetEnvInt(constants.EnvDbPort, 3306),
-			Username:              pkg.GetEnv(constants.EnvDbUsername, "product"),
-			Password:              pkg.GetEnv(constants.EnvDbPassword, "product"),
-			Database:              pkg.GetEnv(constants.EnvDbName, "product"),
+			Username:              pkg.GetEnv(constants.EnvDbUsername, "root"),
+			Password:              pkg.GetEnv(constants.EnvDbPassword, "root"),
+			Database:              pkg.GetEnv(constants.EnvDbName, "productdb"),
 			ConnMaxLifetimeSecond: pkg.GetEnvInt(constants.EnvDbConnMaxLifetimeSecond, 60),
 			MaxOpenConns:          pkg.GetEnvInt(constants.EnvMaxOpenConns, 10),
 			MaxIdleConns:          pkg.GetEnvInt(constants.EnvMaxIdleConns, 5),

@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 	"os"
 	"product-service/internal/core/entities"
+	"product-service/internal/infrastructure/eventstore"
 	"product-service/pkg/config"
 	"product-service/pkg/constants"
 )
@@ -72,7 +73,10 @@ func getDatabaseInstance(conf *config.Config) (db *gorm.DB, err error) {
 
 func (d *Database) RegisterTables() {
 	fmt.Println(d.DB)
-	err := d.DB.AutoMigrate(entities.Product{})
+	err := d.DB.AutoMigrate(
+		&entities.Product{},
+		&eventstore.DBEvent{},
+	)
 
 	if err != nil {
 		d.logger.Fatal("Database migration error", zap.Error(err))

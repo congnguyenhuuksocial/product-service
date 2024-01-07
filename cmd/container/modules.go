@@ -10,6 +10,7 @@ import (
 	"net"
 	"product-service/internal/adapter"
 	healthv1 "product-service/internal/adapter/grpc/healthcheck/v1"
+	productv1 "product-service/internal/adapter/grpc/product/v1"
 	"product-service/internal/application"
 	"product-service/internal/core"
 	"product-service/internal/infrastructure"
@@ -34,6 +35,7 @@ func RegisterGrpcHook(
 	conf *config.Config,
 	log *zap.Logger,
 	health *healthv1.HealthCheckService,
+	product *productv1.ProductGrpcService,
 ) {
 	grpcConf := conf.GRPC
 	grpcServer := grpc.NewServer()
@@ -47,6 +49,7 @@ func RegisterGrpcHook(
 			}
 			reflection.Register(grpcServer)
 			healthv1.RegisterHealthServer(grpcServer, health)
+			productv1.RegisterProductServiceServer(grpcServer, product)
 
 			fatalErr := make(chan error)
 			go func() {
