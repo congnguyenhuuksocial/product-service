@@ -335,3 +335,10 @@ Step 5: double check result in database
 - [Validator] validation for golang v10
 - [Gin] web framework for golang
 - [Mysql] database
+# Todo list
+- implement rest api for gateway
+- implement kafka consumer
+- implement elasticsearch
+- implement redis
+- implement order service
+- implement inventory service
