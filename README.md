@@ -297,3 +297,41 @@ Kafka --> Services : Consumes Messages
 @enduml
 ```
 ![dataflow.png](images%2Fdataflow.png)
+
+# How to run locally
+
+Step 1:  Install Docker and Docker Compose
+```
+brew install docker
+```
+
+Step 2: Clone the repository
+```
+git clone https://github.com/congnguyenhuuksocial/product-service.git
+```
+Step 3: Run the application
+```
+docker-compose up
+```
+
+Step 4: Test the application by gRPC client
+
+Step 5: double check result in database
+
+
+![Screenshot 2024-01-07 at 17.52.24.png](images%2FScreenshot%202024-01-07%20at%2017.52.24.png)
+![Screenshot 2024-01-07 at 17.53.08.png](images%2FScreenshot%202024-01-07%20at%2017.53.08.png)
+![Screenshot 2024-01-07 at 17.53.36.png](images%2FScreenshot%202024-01-07%20at%2017.53.36.png)
+
+# libraries used
+- [Golang](https://golang.org/)
+- [gRPC](https://grpc.io/)
+- [GORM](https://gorm.io/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Kafka](https://kafka.apache.org/)
+- [Elasticsearch](https://www.elastic.co/)
+- [Redis](https://redis.io/)
+- [Validator] validation for golang v10
+- [Gin] web framework for golang
+- [Mysql] database

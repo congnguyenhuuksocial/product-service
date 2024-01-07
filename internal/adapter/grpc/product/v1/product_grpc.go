@@ -28,7 +28,12 @@ func (s *ProductGrpcService) CreateProduct(ctx context.Context, req *CreateProdu
 		return nil, err
 	}
 
-	return nil, nil
+	return &ProductResponse{
+		Id:          0,
+		Name:        req.Name,
+		Description: req.Description,
+		Price:       req.Price,
+	}, nil
 }
 
 func (s *ProductGrpcService) UpdateProduct(ctx context.Context, req *UpdateProductRequest) (*ProductResponse, error) {

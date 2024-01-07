@@ -2,6 +2,7 @@ package commandhandlers
 
 import (
 	"context"
+	"github.com/go-playground/validator/v10"
 	"product-service/internal/application/commandhandlers/commands"
 	"product-service/internal/core/entities"
 	"product-service/internal/core/ports"
@@ -9,17 +10,24 @@ import (
 
 type CreateProductCommandHandler struct {
 	productService ports.ProductService
+	validate       *validator.Validate
 }
 
 func NewCreateProductCommandHandler(
 	productService ports.ProductService,
+	validate *validator.Validate,
 ) *CreateProductCommandHandler {
 	return &CreateProductCommandHandler{
 		productService: productService,
+		validate:       validate,
 	}
 }
 
 func (h *CreateProductCommandHandler) Handle(ctx context.Context, command commands.CreateProductCommand) error {
+	err := h.validate.Struct(command)
+	if err != nil {
+		return err
+	}
 	newProduct := entities.Product{
 		Name:        command.Name,
 		Description: command.Description,

@@ -16,6 +16,7 @@ import (
 	"product-service/internal/infrastructure"
 	"product-service/pkg/config"
 	"product-service/pkg/logger"
+	"product-service/pkg/validator"
 )
 
 var Modules = fx.Options(
@@ -25,6 +26,7 @@ var Modules = fx.Options(
 	adapter.Module,
 	config.Module,
 	logger.Module,
+	validator.Module,
 	fx.Invoke(
 		RegisterGrpcHook,
 	),
