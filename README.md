@@ -2,11 +2,14 @@
 
    The system is split into several microservices, each following the Clean Architecture principles. Key microservices could be:
 
-    `Product Service:` Manages product-related operations.
+    `Product Service:` Manages product-related operations. (Tobe implemented)
 
-    `Order Service:` Handles order processing and management.
+    `Order Service:` Handles order processing and management. (Tobe implemented)
 
-    `Inventory Service:` Manages stock and inventory levels.
+    `Inventory Service:` Manages stock and inventory levels. (Tobe implemented)
+
+    `API Gateway:` Acts as the single entry point to the system, routing requests to appropriate services.
+
     Each microservice is designed with its own database to ensure service independence and scalability. They communicate asynchronously via Kafka for event-driven interactions and synchronously via gRPC or REST APIs for direct service-to-service communication.
 
 2. **Microservice Internal Structure**
