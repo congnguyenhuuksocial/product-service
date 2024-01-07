@@ -1,5 +1,3 @@
-// File: /internal/core/services/productservice.go
-
 package services
 
 import (

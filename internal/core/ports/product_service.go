@@ -1,5 +1,3 @@
-// File: /internal/core/ports/products.go
-
 package ports
 
 import (

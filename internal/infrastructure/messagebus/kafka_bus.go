@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/segmentio/kafka-go"
 	"product-service/internal/infrastructure/messagebus/messages"
+	"product-service/pkg/config"
 )
 
 type KafkaBus struct {
@@ -11,7 +12,19 @@ type KafkaBus struct {
 	reader *kafka.Reader
 }
 
-func NewKafkaBus(writer *kafka.Writer, reader *kafka.Reader) *KafkaBus {
+func NewKafkaBus(conf *config.Config) *KafkaBus {
+	// Kafka writer setup
+	writer := kafka.NewWriter(kafka.WriterConfig{
+		Brokers: []string{conf.Kafka.URI},
+		Topic:   conf.Kafka.Topic,
+	})
+
+	// Kafka reader setup
+	reader := kafka.NewReader(kafka.ReaderConfig{
+		Brokers: []string{conf.Kafka.URI},
+		Topic:   conf.Kafka.Topic,
+		GroupID: conf.Kafka.GroupID,
+	})
 	return &KafkaBus{
 		writer: writer,
 		reader: reader,

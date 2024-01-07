@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package grpc.health.v1;
+option go_package = "/internal/adapter/grpc/healthcheck/v1;healthv1";
+
+message CheckRequest {}
+message CheckResponse {
+bool success = 1;
+}
+
+service Health {
+rpc Check(CheckRequest) returns (CheckResponse) {}
+}
