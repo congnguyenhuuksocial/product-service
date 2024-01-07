@@ -223,5 +223,73 @@ spec:
 helm install product ./product-app-chart
 ```
 
+# Data flow
+1. Actors:
 
+- `User:` Interacts with the web application.
+- `Admin:` Performs administrative tasks.
+2. System Components:
 
+`Web Application:` The main interface for users.
+`API Gateway:` Routes requests to appropriate services.
+`Service Layer:` Business logic (e.g., ProductService).
+`Data Stores:` MySQL, Redis, Elasticsearch.
+`Message Queue:` Kafka for asynchronous processing.
+
+3. Data Flow:
+
+- Users send requests to the Web Application.
+- The Web Application communicates with the Service Layer via the API Gateway.
+- The Service Layer performs business logic, interacts with Data Stores, and publishes messages to Kafka.
+- Kafka Consumers process these messages and might interact back with Services or Data Stores.
+
+**UML Data Flow Diagram**
+```
+@startuml
+!define RECTANGLE class
+
+actor User
+actor Admin
+
+RECTANGLE WebApplication {
+  :User Interface:
+  :API Calls:
+}
+
+RECTANGLE APIGateway {
+  :Request Routing:
+}
+
+RECTANGLE Services {
+  :Business Logic:
+  :Data Processing:
+}
+
+database MySQL {
+  :Relational Data:
+}
+
+database Redis {
+  :Caching:
+}
+
+database Elasticsearch {
+  :Search Index:
+}
+
+queue Kafka {
+  :Message Queue:
+}
+
+User --> WebApplication : uses
+Admin --> WebApplication : manages
+WebApplication --> APIGateway : routes
+APIGateway --> Services : requests
+Services --> MySQL : CRUD Operations
+Services --> Redis : Read/Write Cache
+Services --> Elasticsearch : Index/Search
+Services --> Kafka : Publish Messages
+Kafka --> Services : Consumes Messages
+@enduml
+```
+![dataflow.png](images%2Fdataflow.png)
