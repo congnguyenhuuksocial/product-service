@@ -14,8 +14,8 @@ func NewProductRepository(db *gorm.DB) *ProductRepository {
 	return &ProductRepository{db: db}
 }
 
-func (r *ProductRepository) Create(ctx context.Context, product *entities.Product) error {
-	return r.db.WithContext(ctx).Create(product).Error
+func (r *ProductRepository) Create(ctx context.Context, product *entities.Product) (*entities.Product, error) {
+	return product, r.db.WithContext(ctx).Create(product).Error
 }
 
 func (r *ProductRepository) FindByID(ctx context.Context, id string) (*entities.Product, error) {

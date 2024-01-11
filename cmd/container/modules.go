@@ -10,6 +10,7 @@ import (
 	"net"
 	"product-service/internal/adapter"
 	healthv1 "product-service/internal/adapter/grpc/healthcheck/v1"
+	"product-service/internal/adapter/grpc/product"
 	productv1 "product-service/internal/adapter/grpc/product/v1"
 	"product-service/internal/application"
 	"product-service/internal/core"
@@ -37,7 +38,7 @@ func RegisterGrpcHook(
 	conf *config.Config,
 	log *zap.Logger,
 	health *healthv1.HealthCheckService,
-	product *productv1.ProductGrpcService,
+	product *product.ProductGrpcService,
 ) {
 	grpcConf := conf.GRPC
 	grpcServer := grpc.NewServer()

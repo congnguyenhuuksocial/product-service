@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package api.product.messages;
+option go_package = "/internal/adapter/grpc/product/messages;productmessagesv1";
+
+message ProductCreateRequest {
+  string name = 1;
+  string description = 2;
+  float price = 3;
+  string SKU = 4;
+  int64 stock = 5;
+}
+
+message ProductCreateData {
+  uint32 id = 1;
+}
+
+message ProductCreateResponse {
+  uint32 code = 1;
+  string message = 2;
+  ProductCreateData data = 3;
+}
+

@@ -33,9 +33,10 @@ func NewProductService(
 	}
 }
 
-func (s *productServiceImpl) CreateProduct(ctx context.Context, product *entities.Product) error {
-	if err := s.productRepo.Create(ctx, product); err != nil {
-		return err
+func (s *productServiceImpl) CreateProduct(ctx context.Context, product *entities.Product) (*entities.Product, error) {
+	productResult, err := s.productRepo.Create(ctx, product)
+	if err != nil {
+		return nil, err
 	}
 
 	event := entities.ProductCreatedEvent{
@@ -47,7 +48,7 @@ func (s *productServiceImpl) CreateProduct(ctx context.Context, product *entitie
 	}
 
 	if err := s.eventStore.AppendEvent(ctx, event); err != nil {
-		return err
+		return nil, err
 	}
 
 	if err := s.eventBus.Publish(ctx, "product.created", messages.KafkaMessage{
@@ -56,7 +57,7 @@ func (s *productServiceImpl) CreateProduct(ctx context.Context, product *entitie
 	}); err != nil {
 		s.logger.Error("failed to publish event", zap.Error(err))
 	}
-	return nil
+	return productResult, nil
 }
 
 func (s *productServiceImpl) GetProduct(ctx context.Context, id string) (*entities.Product, error) {

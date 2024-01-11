@@ -3,33 +3,18 @@ syntax = "proto3";
 package api.product.v1;
 option go_package = "/internal/adapter/grpc/product/v1;productv1";
 
+import "api/proto/messages/product_create.proto";
+import "api/proto/messages/product_update.proto";
+import "api/proto/messages/product_delete.proto";
+import "api/proto/messages/product_get.proto";
+import "api/proto/messages/product_list.proto";
+
 service ProductService {
-    rpc CreateProduct(CreateProductRequest) returns (ProductResponse) {}
-    rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse) {}
-}
+    rpc CreateProduct(messages.ProductCreateRequest) returns (messages.ProductCreateResponse) {}
+    rpc UpdateProduct(messages.ProductUpdateRequest) returns (messages.ProductUpdateResponse) {}
+    rpc DeleteProduct(messages.ProductDeleteRequest) returns (messages.ProductDeleteResponse) {}
 
-message CreateProductRequest {
-    string name = 1;
-    string description = 2;
-    float price = 3;
+    rpc GetProductById(messages.ProductGetRequest) returns (messages.ProductGetResponse) {}
+    rpc GetProducts(messages.ProductListRequest) returns (messages.ProductListResponse) {}
 }
-
-message UpdateProductRequest {
-  uint32 id = 1;
-  string name = 2;
-  string description = 3;
-  float price = 4;
-}
-
-message DeleteProductRequest {
-    string id = 1;
-}
-
-message ProductResponse {
-    uint32 id = 1;
-    string name = 2;
-    string description = 3;
-    float price = 4;
-}
-
 

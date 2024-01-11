@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package api.product.messages;
+option go_package = "/internal/adapter/grpc/product/messages;productmessagesv1";
+
+message ProductListRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message ProductListData {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string SKU = 4;
+  float price = 5;
+  int64 stock = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+}
+
+message Metadata {
+  int32 page = 1;
+  int32 limit = 2;
+  int32 total = 3;
+}
+
+message ProductListResponse {
+  uint32 code = 1;
+  string message = 2;
+  repeated ProductListData data = 3;
+  optional Metadata metadata = 4;
+}

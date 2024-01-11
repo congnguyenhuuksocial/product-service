@@ -23,18 +23,20 @@ func NewCreateProductCommandHandler(
 	}
 }
 
-func (h *CreateProductCommandHandler) Handle(ctx context.Context, command commands.CreateProductCommand) error {
+func (h *CreateProductCommandHandler) Handle(ctx context.Context, command commands.CreateProductCommand) (uint32, error) {
 	err := h.validate.Struct(command)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	newProduct := entities.Product{
 		Name:        command.Name,
 		Description: command.Description,
 		Price:       command.Price,
 		SKU:         command.SKU,
-		Stock:       command.Stock,
+		Stock:       int64(command.Stock),
 	}
 
-	return h.productService.CreateProduct(ctx, &newProduct)
+	product, err := h.productService.CreateProduct(ctx, &newProduct)
+
+	return uint32(product.ID), err
 }

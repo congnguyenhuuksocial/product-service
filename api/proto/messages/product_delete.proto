@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package api.product.messages;
+option go_package = "/internal/adapter/grpc/product/messages;productmessagesv1";
+
+message ProductDeleteRequest {
+    string id = 1;
+}
+
+message ProductDeleteData {
+    string id = 1;
+}
+
+message ProductDeleteResponse {
+  uint32 code = 1;
+  string message = 2;
+  ProductDeleteData data = 3;
+}
